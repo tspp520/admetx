@@ -30,10 +30,10 @@ export const tasks = pgTable('tasks', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   startedAt: timestamp('started_at', { withTimezone: true }),
   finishedAt: timestamp('finished_at', { withTimezone: true }),
-}, (t) => ({
-  ownerCreated: index('idx_tasks_owner_created').on(t.ownerId, t.createdAt),
-  statusIdx: index('idx_tasks_status').on(t.status),
-}));
+}, (t) => [
+  index('idx_tasks_owner_created').on(t.ownerId, t.createdAt),
+  index('idx_tasks_status').on(t.status),
+]);
 
 export const taskItems = pgTable('task_items', {
   id: serial('id').primaryKey(),
@@ -44,6 +44,6 @@ export const taskItems = pgTable('task_items', {
   result: jsonb('result'),
   errorMessage: text('error_message'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
-}, (t) => ({
-  taskIdx: index('idx_items_task').on(t.taskId, t.idx),
-}));
+}, (t) => [
+  index('idx_items_task').on(t.taskId, t.idx),
+]);
