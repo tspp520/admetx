@@ -1,0 +1,13 @@
+{
+  "venvPath": "admetx-predictor",
+  "venv": ".venv",
+  "pythonVersion": "3.12",
+  "include": ["admetx-predictor/app", "admetx-predictor/tests"],
+  "exclude": [
+    "**/.venv",
+    "**/__pycache__",
+    "**/node_modules",
+    "admetx-web"
+  ],
+  "extraPaths": ["admetx-predictor"]
+}
