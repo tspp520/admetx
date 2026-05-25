@@ -10,7 +10,7 @@
 
 ### 功能（首版）
 
-- **认证**：多用户登录（bcrypt + JWT），启动时 seed `admin/admetx`；登录页"记住我"勾选 → JWT TTL 24h ↗ 30 天；LDAP 域账号边车待接入（参考 `pylearn_hub` 的 `MultiDomainLDAPAuthenticator`）；保留本地账号作 LDAP 挂时的应急通道
+- **认证**：公司域账号 LDAP 登录（**已接入**，复用 `pylearn_hub` 的 `MultiDomainLDAPAuthenticator`，跨 CP/CD-GW/CE 多子域，GC 搜真实 UPN + UPN 绑定 + 锁定）；本地 `admin` 账号保留作 LDAP 挂时的应急通道（`docs/项目关键信息/审计与应急账号.md`）；登录页"记住我"勾选 → JWT TTL 24h ↗ 30 天
 - **审计**：所有 login / login_failed / logout / password_change 落 `audit_log` 表（含 IP / UA / 时间），见 `docs/项目关键信息/审计与应急账号.md`
 - **预测**：SMILES 输入 / Ketcher 绘分子 / 文件上传（TXT/SMI/CSV，最多 30 个）
 - **任务**：异步执行 + 前端 2s 轮询，结果按用户隔离
@@ -24,6 +24,7 @@
 | 前端 + API | Next.js 16 (App Router, TypeScript) + Tailwind v4 + Drizzle ORM |
 | 数据库 | PostgreSQL 16 (Docker) |
 | 预测服务 | FastAPI + Python 3.12 + RDKit（HTTP 旁挂） |
+| LDAP 边车 | FastAPI + ldap3，跨域 GC 搜索 + UPN 绑定（HTTP 旁挂） |
 | 部署 | Nginx 反代 + systemd + 通配证书 `*.chempartner.com` |
 
 ### 目录
@@ -32,6 +33,7 @@
 admetx/
 ├── admetx-web/         Next.js 工程：页面、API、worker
 ├── admetx-predictor/   FastAPI 预测服务（pyproject.toml + requirements.txt）
+├── admetx-auth/        FastAPI LDAP 认证边车（多域 AD + GC 搜索 + UPN 绑定）
 ├── scripts/            部署/启动/db-init 脚本 + nginx + systemd 模板
 ├── docs/               设计 spec、计划、端口/凭据/部署清单
 └── 需要被复刻的网站的截图/
@@ -69,6 +71,7 @@ pnpm dev
 | --- | --- | --- |
 | Next.js | 3030 | 3031 |
 | FastAPI predictor | 8030 | 8031 |
+| LDAP auth sidecar | 8032 | 8033 |
 | Postgres | 5436 | 5436（库不同） |
 
 ### 文档
@@ -86,7 +89,7 @@ pnpm dev
 
 ### Features (v0)
 
-- **Auth**: multi-user (bcrypt + JWT), seeded `admin / admetx`; "remember me" checkbox extends TTL from 24h to 30 days; corporate LDAP sidecar planned (mirroring `pylearn_hub`'s `MultiDomainLDAPAuthenticator`); local accounts retained as emergency channel for LDAP outages
+- **Auth**: corporate-AD LDAP login (**live**, mirroring `pylearn_hub`'s `MultiDomainLDAPAuthenticator` across CP/CD-GW/CE subdomains: GC lookup → real UPN → bind, with lockout); local `admin` account retained as emergency channel during LDAP outages (`docs/项目关键信息/审计与应急账号.md`); "remember me" extends JWT TTL from 24 h to 30 days
 - **Audit**: every login / login_failed / logout / password_change is appended to `audit_log` (with IP, UA, timestamp); see `docs/项目关键信息/审计与应急账号.md`
 - **Prediction**: SMILES textarea / Ketcher canvas / file upload (TXT/SMI/CSV, ≤30 molecules)
 - **Tasks**: async execution + 2 s UI polling; results are owner-scoped
@@ -100,6 +103,7 @@ pnpm dev
 | Frontend + API | Next.js 16 (App Router, TypeScript) + Tailwind v4 + Drizzle ORM |
 | Database | PostgreSQL 16 (Docker) |
 | Predictor | FastAPI + Python 3.12 + RDKit (sidecar HTTP service) |
+| LDAP auth | FastAPI + ldap3 sidecar (cross-domain GC search + UPN bind) |
 | Deployment | Nginx reverse proxy + systemd + `*.chempartner.com` wildcard cert |
 
 ### Layout
@@ -108,6 +112,7 @@ pnpm dev
 admetx/
 ├── admetx-web/         Next.js project: pages, API routes, in-process worker
 ├── admetx-predictor/   FastAPI prediction service (pyproject.toml + requirements.txt)
+├── admetx-auth/        FastAPI LDAP auth sidecar (multi-domain AD + GC + UPN bind)
 ├── scripts/            deploy / start / db-init scripts + nginx + systemd templates
 ├── docs/               design spec, plan, ports/credentials/deployment checklists
 └── 需要被复刻的网站的截图/  reference screenshots of the original optADMET UI
@@ -145,6 +150,7 @@ Open `http://localhost:3000` and log in as `admin / admetx`.
 | --- | --- | --- |
 | Next.js | 3030 | 3031 |
 | FastAPI predictor | 8030 | 8031 |
+| LDAP auth sidecar | 8032 | 8033 |
 | Postgres | 5436 | 5436 (different database) |
 
 ### Documentation

@@ -1,0 +1,16 @@
+[Unit]
+Description=admetx LDAP auth sidecar (prod)
+After=network.target
+
+[Service]
+User=aiuser
+WorkingDirectory=/export/projects/admetx/admetx-auth
+Environment=PORT=8032
+ExecStart=/export/projects/admetx/admetx-auth/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8032
+Restart=on-failure
+RestartSec=3
+StandardOutput=append:/export/projects/admetx/logs/auth-prod.log
+StandardError=append:/export/projects/admetx/logs/auth-prod.log
+
+[Install]
+WantedBy=multi-user.target
