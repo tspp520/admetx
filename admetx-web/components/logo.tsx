@@ -7,7 +7,7 @@ export function Logo({ size = 28 }: { size?: number }) {
       >
         a
       </div>
-      <span className="text-base font-semibold text-slate-800">admetx 成药性预测平台</span>
+      <span className="text-base font-semibold text-slate-800">睿智医药 AdmetX 成药性预测平台</span>
     </div>
   );
 }

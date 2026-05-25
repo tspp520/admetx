@@ -14,13 +14,24 @@ function secret(): Uint8Array {
 }
 
 const COOKIE = 'admetx_token';
-const TTL_SEC = 60 * 60 * 24; // 24h
+export const TTL_SHORT_SEC = 60 * 60 * 24;       // 24h — default ("不勾记住我")
+export const TTL_LONG_SEC  = 60 * 60 * 24 * 30;  // 30d — "记住我"
 
-export async function signJwt(claims: Claims): Promise<string> {
+// COOKIE_SECURE controls the Set-Cookie `Secure` flag.
+// Default OFF: we expose the app via plain http://<ip>:port during preview
+// and the browser silently drops Secure cookies over http. Set to "1" / "true"
+// only when the deployment is behind HTTPS (e.g. nginx https://admetx.chempartner.com).
+export function isCookieSecure(): boolean {
+  const v = process.env.COOKIE_SECURE;
+  if (v === undefined) return false;
+  return v === '1' || v.toLowerCase() === 'true';
+}
+
+export async function signJwt(claims: Claims, ttlSec: number = TTL_SHORT_SEC): Promise<string> {
   return await new SignJWT(claims as unknown as Record<string, unknown>)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime(`${TTL_SEC}s`)
+    .setExpirationTime(`${ttlSec}s`)
     .sign(secret());
 }
 
@@ -29,11 +40,11 @@ export async function verifyJwt(token: string): Promise<Claims> {
   return payload as unknown as Claims;
 }
 
-export async function setAuthCookie(token: string) {
+export async function setAuthCookie(token: string, ttlSec: number = TTL_SHORT_SEC) {
   (await cookies()).set(COOKIE, token, {
     httpOnly: true, sameSite: 'lax', path: '/',
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: TTL_SEC,
+    secure: isCookieSecure(),
+    maxAge: ttlSec,
   });
 }
 

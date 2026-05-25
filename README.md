@@ -1,4 +1,4 @@
-# admetx — 成药性预测平台 / ADMET Prediction Platform
+# 睿智医药 AdmetX — 成药性预测平台 / Drug-likeness Prediction Platform
 
 [English](#english) · [中文](#中文)
 
@@ -10,11 +10,12 @@
 
 ### 功能（首版）
 
-- 多用户登录（bcrypt + JWT，启动时 seed `admin/admetx`）
-- 预测：SMILES 输入 / Ketcher 绘分子 / 文件上传（TXT/SMI/CSV，最多 30 个）
-- 异步任务 + 前端轮询，结果按用户隔离
-- 模型库（占位卡片）：BBB、hERG、Solubility、AMES、CYP3A4 等
-- 个人设置：修改密码、查看角色
+- **认证**：多用户登录（bcrypt + JWT），启动时 seed `admin/admetx`；登录页"记住我"勾选 → JWT TTL 24h ↗ 30 天；LDAP 域账号边车待接入（参考 `pylearn_hub` 的 `MultiDomainLDAPAuthenticator`）；保留本地账号作 LDAP 挂时的应急通道
+- **审计**：所有 login / login_failed / logout / password_change 落 `audit_log` 表（含 IP / UA / 时间），见 `docs/项目关键信息/审计与应急账号.md`
+- **预测**：SMILES 输入 / Ketcher 绘分子 / 文件上传（TXT/SMI/CSV，最多 30 个）
+- **任务**：异步执行 + 前端 2s 轮询，结果按用户隔离
+- **模型库**（占位卡片）：BBB、hERG、Solubility、AMES、CYP3A4 等
+- **设置**：修改密码、查看角色
 
 ### 技术栈
 
@@ -85,11 +86,12 @@ pnpm dev
 
 ### Features (v0)
 
-- Multi-user auth (bcrypt + JWT; seeded `admin / admetx` on startup)
-- Prediction: SMILES textarea / Ketcher canvas / file upload (TXT/SMI/CSV, ≤30 molecules)
-- Async tasks + UI polling; results are owner-scoped
-- Models library (placeholder cards): BBB, hERG, Solubility, AMES, CYP3A4, etc.
-- Personal settings: change password, view role
+- **Auth**: multi-user (bcrypt + JWT), seeded `admin / admetx`; "remember me" checkbox extends TTL from 24h to 30 days; corporate LDAP sidecar planned (mirroring `pylearn_hub`'s `MultiDomainLDAPAuthenticator`); local accounts retained as emergency channel for LDAP outages
+- **Audit**: every login / login_failed / logout / password_change is appended to `audit_log` (with IP, UA, timestamp); see `docs/项目关键信息/审计与应急账号.md`
+- **Prediction**: SMILES textarea / Ketcher canvas / file upload (TXT/SMI/CSV, ≤30 molecules)
+- **Tasks**: async execution + 2 s UI polling; results are owner-scoped
+- **Models library** (placeholder cards): BBB, hERG, Solubility, AMES, CYP3A4, etc.
+- **Settings**: change password, view role
 
 ### Stack
 

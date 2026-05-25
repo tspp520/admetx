@@ -47,3 +47,24 @@ export const taskItems = pgTable('task_items', {
 }, (t) => [
   index('idx_items_task').on(t.taskId, t.idx),
 ]);
+
+export type AuditAction =
+  | 'login' | 'login_failed' | 'logout' | 'password_change' | 'user_created';
+export type AuthSource = 'local' | 'ldap';
+
+// Audit log — append-only record of authentication & user-management events.
+// Rows survive even if the related user row is deleted (no FK enforcement).
+export const auditLog = pgTable('audit_log', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id'),                          // nullable — login_failed has no resolved user
+  username: varchar('username', { length: 64 }).notNull(),
+  action: varchar('action', { length: 32 }).notNull().$type<AuditAction>(),
+  authSource: varchar('auth_source', { length: 16 }).$type<AuthSource>(),
+  ip: varchar('ip', { length: 64 }),
+  userAgent: varchar('user_agent', { length: 256 }),
+  detail: jsonb('detail'),                             // free-form, e.g. {reason:'bad_password'}
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [
+  index('idx_audit_user_created').on(t.userId, t.createdAt),
+  index('idx_audit_action_created').on(t.action, t.createdAt),
+]);

@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db/client';
 import { users } from '@/lib/db/schema';
 import { readClaimsFromRequest } from '@/lib/auth';
+import { audit } from '@/lib/audit';
 
 const Body = z.object({
   current: z.string().min(1).max(128),
@@ -21,10 +22,16 @@ export async function POST(req: NextRequest) {
   const [u] = await db.select().from(users).where(eq(users.id, Number(c.sub))).limit(1);
   if (!u) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   const ok = await bcrypt.compare(body.current, u.passwordHash);
-  if (!ok) return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });
+  if (!ok) {
+    void audit({ userId: u.id, username: u.username, action: 'login_failed', req,
+                 authSource: 'local', detail: { reason: 'password_change_wrong_current' } });
+    return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });
+  }
 
   const hash = await bcrypt.hash(body.next, 10);
   await db.update(users).set({ passwordHash: hash, updatedAt: new Date() })
     .where(eq(users.id, u.id));
+  void audit({ userId: u.id, username: u.username, action: 'password_change', req,
+               authSource: 'local' });
   return NextResponse.json({ ok: true });
 }

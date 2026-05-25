@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export function LoginForm() {
   const [u, setU] = useState('');
   const [p, setP] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -17,7 +18,7 @@ export function LoginForm() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ username: u, password: p }),
+        body: JSON.stringify({ username: u, password: p, rememberMe }),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
@@ -31,7 +32,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={submit} className="flex flex-col gap-4 w-full max-w-sm">
-      <h1 className="text-xl font-semibold text-slate-800">admetx 成药性预测平台</h1>
+      <h1 className="text-xl font-semibold text-slate-800">睿智医药 AdmetX 成药性预测平台</h1>
       <input
         className="border rounded-md px-3 py-2 text-sm"
         placeholder="用户名"
@@ -42,6 +43,14 @@ export function LoginForm() {
         type="password" placeholder="密码"
         value={p} onChange={(e) => setP(e.target.value)} autoComplete="current-password"
       />
+      <label className="flex items-center gap-2 text-xs text-slate-600 select-none">
+        <input
+          type="checkbox" checked={rememberMe}
+          onChange={(e) => setRememberMe(e.target.checked)}
+          className="accent-teal-500"
+        />
+        记住我（30 天内免登录）
+      </label>
       <button
         type="submit" disabled={pending}
         className="rounded-md bg-teal-500 hover:bg-teal-600 disabled:bg-teal-300
@@ -50,6 +59,10 @@ export function LoginForm() {
         {pending ? '登录中…' : '登录'}
       </button>
       {err && <p className="text-sm text-red-600">{err}</p>}
+      <p className="text-xs text-slate-400 leading-relaxed pt-2 border-t">
+        请使用公司域账号登录，密码即电脑开机密码。<br />
+        忘记或锁定，请联系 IT 重置。
+      </p>
     </form>
   );
 }
