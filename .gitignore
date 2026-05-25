@@ -1,0 +1,36 @@
+# env
+.env
+.env.*
+!.env.example
+
+# node
+node_modules/
+.next/
+.turbo/
+dist/
+out/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# logs
+logs/
+*.log
+
+# os
+.DS_Store
+Thumbs.db
+
+# editors
+.vscode/
+.idea/
+
+# build artifacts
+admetx-web/.next/
+admetx-predictor/.venv/
+
+# ketcher built bundle (大文件，build 阶段下载)
+admetx-web/public/ketcher/
