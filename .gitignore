@@ -34,3 +34,4 @@ admetx-predictor/.venv/
 
 # ketcher built bundle (大文件，build 阶段下载)
 admetx-web/public/ketcher/
+admetx-web/test-results/
