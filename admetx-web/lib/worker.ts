@@ -1,4 +1,4 @@
-import { eq, asc } from 'drizzle-orm';
+import { eq, asc, sql } from 'drizzle-orm';
 import { db } from './db/client';
 import { tasks, taskItems } from './db/schema';
 import { predictBatch } from './predictor-client';
@@ -9,11 +9,27 @@ let started = false;
 let inFlight = 0;
 
 export async function processNext(): Promise<boolean> {
-  // Atomically claim the oldest queued task by flipping it to 'running'.
-  const [picked] = await db.update(tasks)
-    .set({ status: 'running', startedAt: new Date() })
-    .where(eq(tasks.status, 'queued'))
-    .returning();
+  // Atomically claim exactly one queued task using FOR UPDATE SKIP LOCKED.
+  // This prevents multi-row claims when multiple tasks are queued simultaneously.
+  let picked: { id: string; predictorName: string } | undefined;
+  await db.transaction(async (tx) => {
+    const candidates = await tx.execute(sql`
+      SELECT id FROM tasks
+      WHERE status = 'queued'
+      ORDER BY created_at ASC
+      FOR UPDATE SKIP LOCKED
+      LIMIT 1
+    `);
+    const rows = (candidates as unknown as { rows?: Array<{ id: string }> }).rows
+      ?? (candidates as unknown as Array<{ id: string }>);
+    const candidateId = rows?.[0]?.id;
+    if (!candidateId) return;
+    const [row] = await tx.update(tasks)
+      .set({ status: 'running', startedAt: new Date() })
+      .where(eq(tasks.id, candidateId))
+      .returning();
+    picked = row;
+  });
   if (!picked) return false;
 
   const items = await db.select().from(taskItems)
@@ -56,6 +72,13 @@ export async function processNext(): Promise<boolean> {
 export function startWorker() {
   if (started) return;
   started = true;
+  // I5: Recover from prior crash — any task left in 'running' is orphaned.
+  // Mark them failed once at boot; do not retry blindly.
+  void db.update(tasks)
+    .set({ status: 'failed', errorMessage: 'interrupted', finishedAt: new Date() })
+    .where(eq(tasks.status, 'running'))
+    .catch((e) => console.error('[worker] zombie recovery failed:', e));
+
   const loop = async () => {
     if (inFlight < MAX_CONCURRENCY) {
       inFlight += 1;
