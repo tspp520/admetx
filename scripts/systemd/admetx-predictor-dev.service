@@ -1,0 +1,17 @@
+[Unit]
+Description=admetx predictor (dev)
+After=network.target
+
+[Service]
+User=aiuser
+WorkingDirectory=/export/projects/admetx/admetx-predictor
+Environment=PREDICTOR_KIND=rdkit_hybrid
+Environment=PREDICTOR_PORT=8031
+ExecStart=/export/projects/admetx/admetx-predictor/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8031
+Restart=on-failure
+RestartSec=3
+StandardOutput=append:/export/projects/admetx/logs/predictor-dev.log
+StandardError=append:/export/projects/admetx/logs/predictor-dev.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=admetx web (dev)
+After=network.target admetx-predictor-dev.service
+
+[Service]
+User=aiuser
+WorkingDirectory=/export/projects/admetx/admetx-web
+EnvironmentFile=/export/projects/admetx/admetx-web/.env.dev
+ExecStart=/usr/local/nodejs/bin/pnpm dev -p 3031 -H 0.0.0.0
+Restart=on-failure
+RestartSec=3
+StandardOutput=append:/export/projects/admetx/logs/web-dev.log
+StandardError=append:/export/projects/admetx/logs/web-dev.log
+
+[Install]
+WantedBy=multi-user.target
