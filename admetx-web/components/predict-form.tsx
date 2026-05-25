@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SmilesTextarea } from './smiles-textarea';
 import { FileDropzone } from './file-dropzone';
+import { KetcherCanvas } from './ketcher-canvas';
 
 type Tab = 'smiles' | 'draw' | 'upload';
 
@@ -51,7 +52,12 @@ export function PredictForm() {
       </div>
 
       {tab==='smiles' && <SmilesTextarea value={smilesText} onChange={setSmilesText} />}
-      {tab==='draw'   && <div className="border rounded-md h-72 flex items-center justify-center text-slate-400">绘制分子（M4 集成 Ketcher）</div>}
+      {tab==='draw'   && (
+        <KetcherCanvas onSmiles={(s) => {
+          if (s) setSmilesText((prev) => prev ? prev + '\n' + s : s);
+          setTab('smiles');
+        }} />
+      )}
       {tab==='upload' && <FileDropzone onSmiles={(s)=>{ setSmilesText(s.join('\n')); setTab('smiles'); }} />}
 
       <h2 className="text-lg font-semibold mt-8 mb-3">提交信息</h2>
