@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { PasswordInput } from '@/components/password-input';
 
 export function PasswordForm() {
   const [cur, setCur] = useState('');
@@ -24,12 +25,12 @@ export function PasswordForm() {
   return (
     <form onSubmit={submit} className="bg-white border rounded-lg p-6 max-w-xl space-y-4">
       <h2 className="font-medium text-slate-800">修改密码</h2>
-      <input className="border rounded-md w-full px-3 py-2 text-sm" type="password"
-             placeholder="当前密码" value={cur} onChange={(e)=>setCur(e.target.value)} />
-      <input className="border rounded-md w-full px-3 py-2 text-sm" type="password"
-             placeholder="新密码（≥6 位）" value={n1} onChange={(e)=>setN1(e.target.value)} />
-      <input className="border rounded-md w-full px-3 py-2 text-sm" type="password"
-             placeholder="重复新密码" value={n2} onChange={(e)=>setN2(e.target.value)} />
+      <PasswordInput value={cur} onChange={setCur}
+        placeholder="当前密码" autoComplete="current-password" />
+      <PasswordInput value={n1} onChange={setN1}
+        placeholder="新密码（≥6 位）" autoComplete="new-password" />
+      <PasswordInput value={n2} onChange={setN2}
+        placeholder="重复新密码" autoComplete="new-password" />
       <button type="submit" className="bg-teal-500 hover:bg-teal-600 text-white text-sm rounded-md px-4 py-2">
         更新密码
       </button>

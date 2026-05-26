@@ -9,6 +9,7 @@ import { users } from '@/lib/db/schema';
 import { signJwt, isCookieSecure, TTL_SHORT_SEC, TTL_LONG_SEC } from '@/lib/auth';
 import { audit } from '@/lib/audit';
 import { ldapVerify, pickDisplayName } from '@/lib/ldap-client';
+import { checkLockout, recordFailure, recordSuccess } from '@/lib/lockout';
 
 const Body = z.object({
   username: z.string().min(1).max(64),
@@ -31,6 +32,21 @@ function setCookie(res: NextResponse, token: string, ttlSec: number) {
   });
 }
 
+function failResponse(lk: ReturnType<typeof checkLockout>): NextResponse {
+  if (lk.locked) {
+    return NextResponse.json(
+      { error: 'account_locked', message: `账号已锁定，请 ${lk.remainingSecs} 秒后再试` },
+      { status: 423 },
+    );
+  }
+  const msg = lk.attemptsLeft === 1
+    ? '账号或密码错误，还剩最后 1 次机会'
+    : lk.attemptsLeft > 0
+      ? `账号或密码错误，还剩 ${lk.attemptsLeft} 次机会`
+      : '账号或密码错误';
+  return NextResponse.json({ error: 'invalid_credentials', message: msg }, { status: 401 });
+}
+
 export async function POST(req: Request) {
   let parsed;
   try { parsed = Body.parse(await req.json()); }
@@ -41,19 +57,33 @@ export async function POST(req: Request) {
 
   // ── Path A: emergency local account (admin) ──
   if (EMERGENCY_LOCAL_USERS.has(usernameLower)) {
+    const lk = checkLockout(usernameLower);
+    if (lk.locked) {
+      void audit({ username: usernameLower, action: 'login_failed', req,
+                   authSource: 'local', detail: { reason: 'locked', remaining_secs: lk.remainingSecs } });
+      return NextResponse.json(
+        { error: 'account_locked', message: `账号已锁定，请 ${lk.remainingSecs} 秒后再试` },
+        { status: 423 },
+      );
+    }
+
     const [u] = await db.select().from(users)
       .where(eq(users.username, usernameLower)).limit(1);
     if (!u) {
+      const fl = recordFailure(usernameLower);
       void audit({ username: usernameLower, action: 'login_failed', req,
                    authSource: 'local', detail: { reason: 'emergency_user_missing' } });
-      return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });
+      return failResponse(fl);
     }
     const ok = await bcrypt.compare(parsed.password, u.passwordHash);
     if (!ok) {
+      const fl = recordFailure(usernameLower);
       void audit({ userId: u.id, username: u.username, action: 'login_failed', req,
-                   authSource: 'local', detail: { reason: 'bad_password' } });
-      return NextResponse.json({ error: 'invalid_credentials' }, { status: 401 });
+                   authSource: 'local',
+                   detail: { reason: 'bad_password', attempts_left: 'attemptsLeft' in fl ? fl.attemptsLeft : 0 } });
+      return failResponse(fl);
     }
+    recordSuccess(usernameLower);
     const token = await signJwt(
       { sub: String(u.id), username: u.username, role: u.role as 'admin' | 'user' },
       ttlSec,

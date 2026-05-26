@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { PasswordInput } from '@/components/password-input';
 
 export function LoginForm() {
   const [u, setU] = useState('');
@@ -22,7 +23,14 @@ export function LoginForm() {
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        setErr(j.error === 'invalid_credentials' ? '账号或密码错误' : '登录失败');
+        // Server localizes messages (attempts_left countdown, lockout seconds, LDAP unavailable…).
+        // Prefer server message; fall back to a generic label.
+        const fallback =
+          j.error === 'invalid_credentials' ? '账号或密码错误'
+          : j.error === 'account_locked'    ? '账号已锁定'
+          : j.error === 'auth_service_unavailable' ? 'LDAP 服务暂不可达，请稍后重试或用应急 admin 账号'
+          : '登录失败';
+        setErr(j.message || fallback);
         return;
       }
       router.push('/predict');
@@ -38,10 +46,9 @@ export function LoginForm() {
         placeholder="用户名"
         value={u} onChange={(e) => setU(e.target.value)} autoComplete="username"
       />
-      <input
-        className="border rounded-md px-3 py-2 text-sm"
-        type="password" placeholder="密码"
-        value={p} onChange={(e) => setP(e.target.value)} autoComplete="current-password"
+      <PasswordInput
+        value={p} onChange={setP}
+        placeholder="密码" autoComplete="current-password"
       />
       <label className="flex items-center gap-2 text-xs text-slate-600 select-none">
         <input
