@@ -5,7 +5,7 @@
  * No authentication required; the parent page already owns the session.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import type { Ketcher } from 'ketcher-core';
 
@@ -25,17 +25,33 @@ const loadingStyle: React.CSSProperties = {
   fontSize: 13,
 };
 
-function onInit(ketcher: Ketcher) {
-  (window as unknown as { ketcher: Ketcher }).ketcher = ketcher;
-}
+const overlayStyle: React.CSSProperties = {
+  position: 'absolute',
+  inset: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: 'rgba(255,255,255,0.75)',
+  fontFamily: 'sans-serif',
+  color: '#94a3b8',
+  fontSize: 13,
+  zIndex: 9999,
+  pointerEvents: 'none',
+};
 
 export default function KetcherPage() {
+  // wasmReady gates interaction: Ketcher's undo() calls ketcherProvider.getKetcher()
+  // which returns null until the WASM service finishes loading, causing a silent
+  // TypeError. onInit is only called after WASM is ready, so we block interaction
+  // (via pointer-events:none overlay) until then.
+  const [wasmReady, setWasmReady] = useState(false);
+
+  const onInit = useCallback((ketcher: Ketcher) => {
+    (window as unknown as { ketcher: Ketcher }).ketcher = ketcher;
+    setWasmReady(true);
+  }, []);
+
   useEffect(() => {
-    // Eliminate the browser's native HTML5 drag ghost image.
-    // Ketcher moves atoms via mousemove; the ghost is purely a browser artefact.
-    // e.preventDefault() alone is insufficient in some Chrome builds when a
-    // draggable element (Ketcher's scrollbar has draggable=true) is involved —
-    // setDragImage with a blank 1×1 GIF ensures the ghost is fully suppressed.
     const blank = new Image();
     blank.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
     const suppress = (e: DragEvent) => {
@@ -47,7 +63,7 @@ export default function KetcherPage() {
   }, []);
 
   return (
-    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
+    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
       {/* Override Ketcher's molecule-shaped SVG cursor with a plain crosshair */}
       <style>{`
         [class*="intermediateCanvas"][class*="enableCursor"],
@@ -56,6 +72,11 @@ export default function KetcherPage() {
         }
       `}</style>
       <KetcherEditor onInit={onInit} />
+      {!wasmReady && (
+        <div style={overlayStyle}>
+          正在初始化编辑器…
+        </div>
+      )}
     </div>
   );
 }
