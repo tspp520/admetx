@@ -5,6 +5,7 @@
  * No authentication required; the parent page already owns the session.
  */
 
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import type { Ketcher } from 'ketcher-core';
 
@@ -25,13 +26,28 @@ const loadingStyle: React.CSSProperties = {
 };
 
 function onInit(ketcher: Ketcher) {
-  // Expose ketcher on the iframe window so the parent can call getSmiles().
   (window as unknown as { ketcher: Ketcher }).ketcher = ketcher;
 }
 
 export default function KetcherPage() {
+  useEffect(() => {
+    // Prevent the browser from producing a native HTML5 drag ghost image when
+    // the user clicks and moves atoms/molecules. Ketcher handles movement via
+    // mousemove; the ghost is purely a browser artefact we don't want.
+    const suppress = (e: DragEvent) => e.preventDefault();
+    document.addEventListener('dragstart', suppress, true);
+    return () => document.removeEventListener('dragstart', suppress, true);
+  }, []);
+
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
+      {/* Override Ketcher's molecule-shaped SVG cursor with a plain crosshair */}
+      <style>{`
+        [class*="intermediateCanvas"][class*="enableCursor"],
+        [class*="intermediateCanvas"][class*="enableCursor"]:active {
+          cursor: crosshair !important;
+        }
+      `}</style>
       <KetcherEditor onInit={onInit} />
     </div>
   );
