@@ -31,10 +31,17 @@ function onInit(ketcher: Ketcher) {
 
 export default function KetcherPage() {
   useEffect(() => {
-    // Prevent the browser from producing a native HTML5 drag ghost image when
-    // the user clicks and moves atoms/molecules. Ketcher handles movement via
-    // mousemove; the ghost is purely a browser artefact we don't want.
-    const suppress = (e: DragEvent) => e.preventDefault();
+    // Eliminate the browser's native HTML5 drag ghost image.
+    // Ketcher moves atoms via mousemove; the ghost is purely a browser artefact.
+    // e.preventDefault() alone is insufficient in some Chrome builds when a
+    // draggable element (Ketcher's scrollbar has draggable=true) is involved —
+    // setDragImage with a blank 1×1 GIF ensures the ghost is fully suppressed.
+    const blank = new Image();
+    blank.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    const suppress = (e: DragEvent) => {
+      e.preventDefault();
+      e.dataTransfer?.setDragImage(blank, 0, 0);
+    };
     document.addEventListener('dragstart', suppress, true);
     return () => document.removeEventListener('dragstart', suppress, true);
   }, []);
