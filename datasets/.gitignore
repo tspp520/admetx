@@ -1,0 +1,6 @@
+# 大文件/缓存不入库;processed 清洗结果保留
+scripts/_tdc_cache/
+scripts/_run.log
+**/raw/*_full.csv
+scripts/__pycache__/
+scripts/.pytest_cache/

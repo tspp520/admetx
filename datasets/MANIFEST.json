@@ -1,0 +1,5 @@
+{
+  "generated": "",
+  "note": "由 scripts/download_clean.py 在 Task4 回填。datasets 为下载成功的数据集清单(含行数/解析率/划分/元数据)。",
+  "datasets": []
+}
