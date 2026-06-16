@@ -13,3 +13,9 @@
 ### 待办（后续 Task）
 - Task2 目录骨架；Task3 下载配置+清洗函数+单测；Task4 实际下载清洗。
 - Task5-7 由本表生成 model-catalog 并改造 /models。
+
+## 2026-06-15 Task2-3 骨架与清洗函数
+
+- Task2: 五大类别目录 + README + MANIFEST 骨架 + .gitignore（提交 246bbfd）。
+- Task3: datasets_config.py（29 个下载条目: ADME 22 + Tox 7）、lib_normalize.py（canonical/dedup/解析率）、test_lib_normalize.py。
+- 单测: 5 passed。config 自检: 目录唯一、可导入。
