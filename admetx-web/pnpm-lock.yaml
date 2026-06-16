@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  ketcher-core: 3.1.0
+
 importers:
 
   .:
@@ -2204,10 +2207,6 @@ packages:
     resolution: {integrity: sha512-hyH6cbcfizfTdEc9x0Bqmo9P8Z99+izYkkE5KYICoef51OESx3NDw/dv8kGKk452b0ScEONStgE4EVzB0dzCfQ==}
     engines: {node: '>=14'}
 
-  ketcher-core@3.12.0:
-    resolution: {integrity: sha512-MQn0v6PiCdWAe3tHzOlYMSUA5KvieY8QfSeoZhujwanWRxfo9nWkJV/bJSkfehqVgrM4vT41MF23kES9yJB0jw==}
-    engines: {node: '>=14'}
-
   ketcher-react@3.1.0:
     resolution: {integrity: sha512-DwdSmxXf5o763toTtuQeoF4xvownTD8nGcM0DQiH9M/kc+psk/MhxGH5KT1BRDI/wuqMKFIHvRwoNKQS3r5jSQ==}
     engines: {node: '>=14'}
@@ -2482,10 +2481,6 @@ packages:
   p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
-
-  paper@0.12.18:
-    resolution: {integrity: sha512-ZSLIEejQTJZuYHhSSqAf4jXOnii0kPhCJGAnYAANtdS72aNwXJ9cP95tZHgq1tnNpvEwgQhggy+4OarviqTCGw==}
-    engines: {node: '>=8.0.0'}
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -4849,21 +4844,6 @@ snapshots:
       - react
       - react-dom
 
-  ketcher-core@3.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-    dependencies:
-      '@babel/runtime': 7.29.2
-      assert: 2.1.0
-      d3: 7.9.0
-      file-saver: 2.0.5
-      lodash: 4.18.1
-      paper: 0.12.18
-      raphael: 2.3.0
-      react-device-detect: 2.2.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      svgpath: 2.6.0
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
   ketcher-react@3.1.0(@types/react@19.2.15)(immutable@3.7.6)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@babel/runtime': 7.29.2
@@ -4880,7 +4860,7 @@ snapshots:
       font-face-observer: 1.0.0
       hoist-non-react-statics: 3.3.2
       intersection-observer: 0.12.2
-      ketcher-core: 3.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      ketcher-core: 3.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       lodash: 4.18.1
       miew-react: 1.0.0(@types/react@19.2.15)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
@@ -4916,7 +4896,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.2
       indigo-ketcher: 1.29.0
-      ketcher-core: 3.12.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      ketcher-core: 3.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -5214,8 +5194,6 @@ snapshots:
       p-limit: 2.3.0
 
   p-try@2.2.0: {}
-
-  paper@0.12.18: {}
 
   parent-module@1.0.1:
     dependencies:
