@@ -1,0 +1,16 @@
+{
+  "name": "Bioavailability_Ma",
+  "optadmet_props": [],
+  "task_type": "binary_classification",
+  "source": "TDC:Bioavailability_Ma",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 448,
+  "n_valid": 64,
+  "n_test": 128,
+  "n_total": 640,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

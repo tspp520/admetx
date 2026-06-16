@@ -1,0 +1,18 @@
+{
+  "name": "BBB_Martins",
+  "optadmet_props": [
+    "BBB"
+  ],
+  "task_type": "binary_classification",
+  "source": "TDC:BBB_Martins",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 1383,
+  "n_valid": 198,
+  "n_test": 394,
+  "n_total": 1975,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

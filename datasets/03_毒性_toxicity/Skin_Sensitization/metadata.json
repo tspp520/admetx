@@ -1,0 +1,18 @@
+{
+  "name": "Skin_Reaction",
+  "optadmet_props": [
+    "Skin_Sens"
+  ],
+  "task_type": "binary_classification",
+  "source": "TDC:Skin_Reaction",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 282,
+  "n_valid": 40,
+  "n_test": 82,
+  "n_total": 404,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

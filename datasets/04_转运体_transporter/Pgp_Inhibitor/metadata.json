@@ -1,0 +1,18 @@
+{
+  "name": "Pgp_Broccatelli",
+  "optadmet_props": [
+    "Pgp_Inhibitor"
+  ],
+  "task_type": "binary_classification",
+  "source": "TDC:Pgp_Broccatelli",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 846,
+  "n_valid": 121,
+  "n_test": 245,
+  "n_total": 1212,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

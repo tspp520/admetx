@@ -1,0 +1,16 @@
+{
+  "name": "Carcinogens_Lagunin",
+  "optadmet_props": [],
+  "task_type": "binary_classification",
+  "source": "TDC:Carcinogens_Lagunin",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 195,
+  "n_valid": 28,
+  "n_test": 55,
+  "n_total": 278,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "PAMPA_NCATS",
+  "optadmet_props": [],
+  "task_type": "binary_classification",
+  "source": "TDC:PAMPA_NCATS",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 1423,
+  "n_valid": 203,
+  "n_test": 408,
+  "n_total": 2034,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

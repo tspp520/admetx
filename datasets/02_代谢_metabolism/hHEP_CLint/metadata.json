@@ -1,0 +1,18 @@
+{
+  "name": "Clearance_Hepatocyte_AZ",
+  "optadmet_props": [
+    "hHEP_CLint"
+  ],
+  "task_type": "regression",
+  "source": "TDC:Clearance_Hepatocyte_AZ",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 713,
+  "n_valid": 104,
+  "n_test": 203,
+  "n_total": 1020,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Solubility_AqSolDB",
+  "optadmet_props": [
+    "Solubility",
+    "Sw"
+  ],
+  "task_type": "regression",
+  "source": "TDC:Solubility_AqSolDB",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 6986,
+  "n_valid": 998,
+  "n_test": 1996,
+  "n_total": 9980,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

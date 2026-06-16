@@ -1,0 +1,18 @@
+{
+  "name": "hERG",
+  "optadmet_props": [
+    "hERG"
+  ],
+  "task_type": "binary_classification",
+  "source": "TDC:hERG",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 456,
+  "n_valid": 64,
+  "n_test": 128,
+  "n_total": 648,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

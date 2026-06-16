@@ -1,0 +1,16 @@
+{
+  "name": "HydrationFreeEnergy_FreeSolv",
+  "optadmet_props": [],
+  "task_type": "regression",
+  "source": "TDC:HydrationFreeEnergy_FreeSolv",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 449,
+  "n_valid": 41,
+  "n_test": 152,
+  "n_total": 642,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

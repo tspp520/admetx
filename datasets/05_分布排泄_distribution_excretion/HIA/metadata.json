@@ -1,0 +1,16 @@
+{
+  "name": "HIA_Hou",
+  "optadmet_props": [],
+  "task_type": "binary_classification",
+  "source": "TDC:HIA_Hou",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 404,
+  "n_valid": 57,
+  "n_test": 117,
+  "n_total": 578,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

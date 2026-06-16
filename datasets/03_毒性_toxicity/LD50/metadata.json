@@ -1,0 +1,18 @@
+{
+  "name": "LD50_Zhu",
+  "optadmet_props": [
+    "Rat_LD50"
+  ],
+  "task_type": "regression",
+  "source": "TDC:LD50_Zhu",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 5144,
+  "n_valid": 732,
+  "n_test": 1466,
+  "n_total": 7342,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

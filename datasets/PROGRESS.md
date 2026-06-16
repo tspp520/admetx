@@ -19,3 +19,12 @@
 - Task2: 五大类别目录 + README + MANIFEST 骨架 + .gitignore（提交 246bbfd）。
 - Task3: datasets_config.py（29 个下载条目: ADME 22 + Tox 7）、lib_normalize.py（canonical/dedup/解析率）、test_lib_normalize.py。
 - 单测: 5 passed。config 自检: 目录唯一、可导入。
+
+## 2026-06-16 Task4 下载+清洗
+
+- 隔离环境: datasets/.venv (venv, 非 conda)。包源: 阿里云镜像(pip.conf 全局),非 pypi 官方。
+- PyTDC 用 --no-deps 安装(规避 torch 888MB 等无关重依赖),只补 pandas/numpy/sklearn/rdkit。
+- 下载清洗: 29/29 成功, 0 失败。所有集 SMILES 解析率=1.0。
+- 落盘: 87 个 processed CSV(train/valid/test, scaffold 70/10/20) + 29 metadata.json + 29 数据卡 + MANIFEST.json。
+- 大文件(raw/*_full.csv、_tdc_cache、.venv)已 gitignore。
+- 检查点: 0 缺失 0 空文件。

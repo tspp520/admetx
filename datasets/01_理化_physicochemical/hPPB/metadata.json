@@ -1,0 +1,18 @@
+{
+  "name": "PPBR_AZ",
+  "optadmet_props": [
+    "hPPB"
+  ],
+  "task_type": "regression",
+  "source": "TDC:PPBR_AZ",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 1129,
+  "n_valid": 161,
+  "n_test": 324,
+  "n_total": 1614,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Half_Life_Obach",
+  "optadmet_props": [],
+  "task_type": "regression",
+  "source": "TDC:Half_Life_Obach",
+  "source_url": "https://tdcommons.ai",
+  "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+  "n_train": 465,
+  "n_valid": 66,
+  "n_test": 134,
+  "n_total": 665,
+  "smiles_parse_rate_min": 1.0,
+  "split_method": "scaffold",
+  "seed": 42,
+  "download_date": "2026-06-16"
+}

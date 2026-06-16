@@ -1,5 +1,524 @@
 {
-  "generated": "",
-  "note": "由 scripts/download_clean.py 在 Task4 回填。datasets 为下载成功的数据集清单(含行数/解析率/划分/元数据)。",
-  "datasets": []
+  "generated": "2026-06-16T15:05:39",
+  "summary": {
+    "ok": 29,
+    "err": 0,
+    "total": 29
+  },
+  "datasets": [
+    {
+      "name": "Caco2_Wang",
+      "optadmet_props": [
+        "Caco-2"
+      ],
+      "task_type": "regression",
+      "source": "TDC:Caco2_Wang",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 634,
+      "n_valid": 91,
+      "n_test": 181,
+      "n_total": 906,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Lipophilicity_AstraZeneca",
+      "optadmet_props": [
+        "LogD"
+      ],
+      "task_type": "regression",
+      "source": "TDC:Lipophilicity_AstraZeneca",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 2940,
+      "n_valid": 420,
+      "n_test": 840,
+      "n_total": 4200,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Solubility_AqSolDB",
+      "optadmet_props": [
+        "Solubility",
+        "Sw"
+      ],
+      "task_type": "regression",
+      "source": "TDC:Solubility_AqSolDB",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 6986,
+      "n_valid": 998,
+      "n_test": 1996,
+      "n_total": 9980,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "PPBR_AZ",
+      "optadmet_props": [
+        "hPPB"
+      ],
+      "task_type": "regression",
+      "source": "TDC:PPBR_AZ",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 1129,
+      "n_valid": 161,
+      "n_test": 324,
+      "n_total": 1614,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "VDss_Lombardo",
+      "optadmet_props": [
+        "Vd"
+      ],
+      "task_type": "regression",
+      "source": "TDC:VDss_Lombardo",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 777,
+      "n_valid": 113,
+      "n_test": 221,
+      "n_total": 1111,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "BBB_Martins",
+      "optadmet_props": [
+        "BBB"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:BBB_Martins",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 1383,
+      "n_valid": 198,
+      "n_test": 394,
+      "n_total": 1975,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "HydrationFreeEnergy_FreeSolv",
+      "optadmet_props": [],
+      "task_type": "regression",
+      "source": "TDC:HydrationFreeEnergy_FreeSolv",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 449,
+      "n_valid": 41,
+      "n_test": 152,
+      "n_total": 642,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "PAMPA_NCATS",
+      "optadmet_props": [],
+      "task_type": "binary_classification",
+      "source": "TDC:PAMPA_NCATS",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 1423,
+      "n_valid": 203,
+      "n_test": 408,
+      "n_total": 2034,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP1A2_Veith",
+      "optadmet_props": [
+        "CYP1A2_Inhibitor"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP1A2_Veith",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 8805,
+      "n_valid": 1257,
+      "n_test": 2517,
+      "n_total": 12579,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP2C9_Veith",
+      "optadmet_props": [
+        "CYP2C9_Inhibitor"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP2C9_Veith",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 8464,
+      "n_valid": 1209,
+      "n_test": 2419,
+      "n_total": 12092,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP2C19_Veith",
+      "optadmet_props": [
+        "CYP2C19_Inhibitor"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP2C19_Veith",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 8865,
+      "n_valid": 1266,
+      "n_test": 2534,
+      "n_total": 12665,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP2D6_Veith",
+      "optadmet_props": [
+        "CYP2D6_Inhibitor"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP2D6_Veith",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 9191,
+      "n_valid": 1313,
+      "n_test": 2626,
+      "n_total": 13130,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP3A4_Veith",
+      "optadmet_props": [
+        "CYP3A4_Inhibitor"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP3A4_Veith",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 8629,
+      "n_valid": 1232,
+      "n_test": 2467,
+      "n_total": 12328,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP2C9_Substrate_CarbonMangels",
+      "optadmet_props": [
+        "CYP2C9_Substrate"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP2C9_Substrate_CarbonMangels",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 465,
+      "n_valid": 66,
+      "n_test": 135,
+      "n_total": 666,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP2D6_Substrate_CarbonMangels",
+      "optadmet_props": [
+        "CYP2D6_Substrate"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP2D6_Substrate_CarbonMangels",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 464,
+      "n_valid": 66,
+      "n_test": 134,
+      "n_total": 664,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "CYP3A4_Substrate_CarbonMangels",
+      "optadmet_props": [
+        "CYP3A4_Substrate"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:CYP3A4_Substrate_CarbonMangels",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 466,
+      "n_valid": 67,
+      "n_test": 134,
+      "n_total": 667,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Clearance_Hepatocyte_AZ",
+      "optadmet_props": [
+        "hHEP_CLint"
+      ],
+      "task_type": "regression",
+      "source": "TDC:Clearance_Hepatocyte_AZ",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 713,
+      "n_valid": 104,
+      "n_test": 203,
+      "n_total": 1020,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Clearance_Microsome_AZ",
+      "optadmet_props": [
+        "HLM_Stability"
+      ],
+      "task_type": "regression",
+      "source": "TDC:Clearance_Microsome_AZ",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 771,
+      "n_valid": 110,
+      "n_test": 221,
+      "n_total": 1102,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "LD50_Zhu",
+      "optadmet_props": [
+        "Rat_LD50"
+      ],
+      "task_type": "regression",
+      "source": "TDC:LD50_Zhu",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 5144,
+      "n_valid": 732,
+      "n_test": 1466,
+      "n_total": 7342,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "AMES",
+      "optadmet_props": [
+        "TA_97&1537",
+        "TA_98",
+        "TA_100",
+        "TA_102",
+        "TA_1535",
+        "TA"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:AMES",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 5081,
+      "n_valid": 721,
+      "n_test": 1453,
+      "n_total": 7255,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "hERG",
+      "optadmet_props": [
+        "hERG"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:hERG",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 456,
+      "n_valid": 64,
+      "n_test": 128,
+      "n_total": 648,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "hERG_Karim",
+      "optadmet_props": [
+        "hERG"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:hERG_Karim",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 9411,
+      "n_valid": 1344,
+      "n_test": 2690,
+      "n_total": 13445,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Skin_Reaction",
+      "optadmet_props": [
+        "Skin_Sens"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:Skin_Reaction",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 282,
+      "n_valid": 40,
+      "n_test": 82,
+      "n_total": 404,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "DILI",
+      "optadmet_props": [],
+      "task_type": "binary_classification",
+      "source": "TDC:DILI",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 332,
+      "n_valid": 47,
+      "n_test": 96,
+      "n_total": 475,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Carcinogens_Lagunin",
+      "optadmet_props": [],
+      "task_type": "binary_classification",
+      "source": "TDC:Carcinogens_Lagunin",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 195,
+      "n_valid": 28,
+      "n_test": 55,
+      "n_total": 278,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Pgp_Broccatelli",
+      "optadmet_props": [
+        "Pgp_Inhibitor"
+      ],
+      "task_type": "binary_classification",
+      "source": "TDC:Pgp_Broccatelli",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 846,
+      "n_valid": 121,
+      "n_test": 245,
+      "n_total": 1212,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Half_Life_Obach",
+      "optadmet_props": [],
+      "task_type": "regression",
+      "source": "TDC:Half_Life_Obach",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 465,
+      "n_valid": 66,
+      "n_test": 134,
+      "n_total": 665,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "HIA_Hou",
+      "optadmet_props": [],
+      "task_type": "binary_classification",
+      "source": "TDC:HIA_Hou",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 404,
+      "n_valid": 57,
+      "n_test": 117,
+      "n_total": 578,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    },
+    {
+      "name": "Bioavailability_Ma",
+      "optadmet_props": [],
+      "task_type": "binary_classification",
+      "source": "TDC:Bioavailability_Ma",
+      "source_url": "https://tdcommons.ai",
+      "license": "见 TDC 各数据集说明(多为 CC BY 4.0)",
+      "n_train": 448,
+      "n_valid": 64,
+      "n_test": 128,
+      "n_total": 640,
+      "smiles_parse_rate_min": 1.0,
+      "split_method": "scaffold",
+      "seed": 42,
+      "download_date": "2026-06-16"
+    }
+  ]
 }
