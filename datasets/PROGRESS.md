@@ -36,3 +36,13 @@
 - Task7: /models 改 client 折叠手风琴 + 筛选(全部/有数据/分类/回归)+ 搜索, 全 140 项。tsc --noEmit 通过。
 - Task8: dev(3031)登录验证 /models HTTP 200; 就绪区(27)+5 分区渲染正常; 折叠生效(占位卡片折叠态不入 DOM)。
 - 安全: 未对 prod(3030)做 build/重启; prod 仍服务旧构建, 上线需用户确认。
+
+## 2026-06-16 prod 上线 + ketcher bug 修复
+
+- /models 上线 prod: stash 隔离 7 个非本次 WIP → 构建 → 部署; prod 从手动 nohup 升级为 systemd 托管(admetx-web-prod.service, enabled, 已补 PATH/NODE_ENV)。
+- 期间一次短暂 down(fuser -k 误杀进程组 + 重启进未验证构建),已用 systemd 干净拉起恢复。
+- 绘制分子卡"正在初始化编辑器" bug 根因(两层)并修复(commit 9e37922):
+  1) Next16 默认 turbopack → ketcher indigoWorker URL 失配 404。改 build: next build --webpack + next.config 把 jsdom/canvas 别名 false。
+  2) ketcher-core 双版本(3.1.0 vs `*`→3.12.0)→ setKetcherInstance 缺失。pnpm-workspace overrides 锁 3.1.0 去重。
+  - playwright 验证: window.ketcher=true, 遮罩消失, 无 404/报错。
+- 经验: prod 须先验证 BUILD_ID 再 restart; 勿在 build 命令里对 prod 端口用 fuser -k(会误杀会话进程组)。
