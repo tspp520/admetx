@@ -28,3 +28,11 @@
 - 落盘: 87 个 processed CSV(train/valid/test, scaffold 70/10/20) + 29 metadata.json + 29 数据卡 + MANIFEST.json。
 - 大文件(raw/*_full.csv、_tdc_cache、.venv)已 gitignore。
 - 检查点: 0 缺失 0 空文件。
+
+## 2026-06-16 Task5-8 /models 改造
+
+- Task5: gen_model_catalog.mjs 生成 model-catalog.ts(140 项, dataset 27 / placeholder 113, slug 无重复)+ 详情页状态显示。
+- Task6: model-card.tsx 状态徽章(数据就绪小圆点/占位), 简洁无 AI 味。
+- Task7: /models 改 client 折叠手风琴 + 筛选(全部/有数据/分类/回归)+ 搜索, 全 140 项。tsc --noEmit 通过。
+- Task8: dev(3031)登录验证 /models HTTP 200; 就绪区(27)+5 分区渲染正常; 折叠生效(占位卡片折叠态不入 DOM)。
+- 安全: 未对 prod(3030)做 build/重启; prod 仍服务旧构建, 上线需用户确认。
