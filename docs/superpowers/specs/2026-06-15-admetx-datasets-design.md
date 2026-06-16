@@ -21,6 +21,7 @@
 - 每个数据集配 `metadata.json` + 数据卡 `README.md`；模块级 `MANIFEST.json` + `PROGRESS.md` 留痕。
 - 可复现下载/清洗脚本（`scripts/`）。
 - 无干净公开数据的属性统一登记为"缺口 + 候选源"。
+- **关联交付：`/models` 页面改造**（详见 §8）——由同一份 `property_mapping.csv` 驱动，与数据集模块共享属性目录。
 
 ### 1.3 范围外（out-of-scope，用户下一步）
 
@@ -140,3 +141,34 @@ datasets/
 - **TDC 数据集名/划分变动**：metadata 记录 download_date 与版本，便于追溯。
 - **属性映射判错**（回归当分类等）：阶段 3 设抽查检查点，并在 README 标注判定依据。
 - **范围蔓延**（被诱导去做训练）：严守 §1.3，本次止于干净数据集。
+
+---
+
+## 8. 关联交付：`/models` 页面改造
+
+### 8.1 背景与现状
+
+现 `/models`（`admetx-web/app/(app)/models/page.tsx`）硬编码 6 张占位卡片（`lib/model-catalog.ts` + `components/model-card.tsx`），teal 极简风。要扩成对齐 optADMET 能力的全量目录，对外用于全员大会预发布展示。
+
+### 8.2 已确认设计（与用户敲定）
+
+- **收录范围**：全部 140 属性（对齐 `待预测ADMET属性清单.md`）。
+- **展示形态**：折叠手风琴 + 卡片。顶部"⭐ 有公开数据集（首批可训练）"优先区默认展开；其余按 5 大类别（理化/代谢/毒性/转运体/风险评估）分区，**默认折叠**，点击展开看卡片网格。
+- **顶部工具条**：统计（共 140 · 有数据 N · 占位 M）+ 筛选 chips（全部/有数据/分类/回归）+ 搜索框。
+- **卡片内容**：属性名、类型徽章（回归/分类）、`类别 · 状态`、简述。状态 = `有数据✓`（有公开数据集，teal/绿）或 `占位`（灰）。
+- **风格**：沿用现有 teal 极简卡片风，不引入新依赖。
+
+### 8.3 数据来源（关键：与数据集模块同源）
+
+`lib/model-catalog.ts` 由 `datasets/property_mapping.csv` **生成**（脚本或构建期转换），字段：`slug, name, category, type(regression|classification), status(dataset|placeholder), datasetSource?, description`。`property_mapping.csv` 是两条线的唯一事实源，避免双份维护漂移。
+
+### 8.4 改动文件
+
+- `lib/model-catalog.ts`：扩为 140 条（由映射生成），新增 `status`/`datasetSource` 字段。
+- `components/model-card.tsx`：加状态徽章。
+- `app/(app)/models/page.tsx`：改造为可折叠分区 + 工具条（需 client 组件管理折叠/筛选/搜索状态）。
+- 新增轻量生成脚本：`scripts/gen-model-catalog.*`（从 CSV 生成 TS）。
+
+### 8.5 验收
+
+页面展示 140 项、分类折叠可用、筛选/搜索可用、有数据项高亮、移动端不塌、构建通过、与 `property_mapping.csv` 一致。
