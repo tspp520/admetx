@@ -6,6 +6,8 @@ After=network.target admetx-predictor-prod.service
 User=aiuser
 WorkingDirectory=/export/projects/admetx/admetx-web
 EnvironmentFile=/export/projects/admetx/admetx-web/.env.prod
+Environment=PATH=/usr/local/nodejs/bin:/usr/bin:/bin
+Environment=NODE_ENV=production
 ExecStart=/usr/local/nodejs/bin/pnpm start -p 3030 -H 0.0.0.0
 Restart=on-failure
 RestartSec=3
